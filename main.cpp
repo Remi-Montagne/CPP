@@ -1,29 +1,34 @@
 #include <iostream>
-#include "mot_mystere_functions.h"
-using namespace std;
-/*
- * mot_mystere : game where the player must guess a word whose letters are shuffled
- */
+#include <string>
+#include <vector>
 
-main() {
+#include "mot_mystere_functions.h"
+
+using namespace std;
+
+int main() {
 	
-	bool again(true); //indicates if the player wants to play one more game
+	cout << endl << "-----------------------------------------------------------\nBienvenue dans le jeu du mot Mystere !" << endl;
+	
+	bool play = true;
+	
+	//gets the dictionnary of possible words in a vector
 	vector<string> dico;
-	string const myFile = "dico.txt";
+	getDico(dico, "dico.txt");
 	
-	getDico(dico, myFile);
+	//the actual game
+	while(play) {
 	
-	while(again) {
-		string word = getWord(dico); //gets the word
-		
-		string newWord = mix(word); //shuffles the letters
-		
-		guess(word, newWord); //asks the player to guess the word
-		
-		again=playAgain(); ////asks the player if he wants to play one more game
-		
+	string word = chooseWord(dico);
+	
+	string shuffled = shuffleWord(word);
+	
+	guessWord(word, shuffled);
+	
+	play = oneMore();
 	}
 	
-	return 0;
+	cout << endl << "Au revoir. Reviens bientôt !\n-----------------------------------------------------------" << endl << endl;
 	
+	return 0;
 }
